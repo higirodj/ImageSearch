@@ -1,11 +1,11 @@
 # ImageSearch
-I. A nasty brute force image search algorithm in c++. 
+I. A brute force image search algorithm in c++ that searches for the occurence of a sub-image in a larger image. 
 
-II. File list: SearchAlgorithm.cpp
+II. File list: ImageSearchAlgorithm.cpp
 
 III. Command line arguments in order to run the program:
 
-g++ -g –Wall –std=c++11 –O3 SearchAlgorithm.cpp PNG.cpp –o higirodj -lpng
+g++ -g –Wall –std=c++11 –O3 ImageSearchAlgorithm.cpp PNG.cpp main.cpp –o search -lpng
 
 IV. Textual output verification:
 
