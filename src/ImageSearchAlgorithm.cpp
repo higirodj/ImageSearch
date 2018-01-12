@@ -167,7 +167,7 @@ ImageSearchAlgorithm::drawBox(PNG& png, int row, int col,
 
 void
 ImageSearchAlgorithm::print() {
-    for (unsigned int k = 1; k < matched_regions.size(); k++) {
+    for (unsigned int k = 0; k < matched_regions.size(); k++) {
         int row = std::get<0>(matched_regions[k]);
         int col = std::get<1>(matched_regions[k]);
         drawBox(output, row, col, mask.getWidth(), mask.getHeight());
@@ -175,5 +175,5 @@ ImageSearchAlgorithm::print() {
                 row + mask.getHeight(), col + mask.getWidth());
     }
     output.write(output_img);
-    std::cout << "Number of matches: " << (matched_regions.size() - 1) << std::endl;
+    std::cout << "Number of matches: " << (matched_regions.size()) << std::endl;
 }
