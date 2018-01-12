@@ -11,6 +11,7 @@
  * Created on January 9, 2018, 2:13 PM
  */
 
+#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -69,7 +70,7 @@ public:
      * @return 
      */
     bool check_match_helper(const std::vector<unsigned char>& buffer_image,
-            const int img_index, Color avg_background_color);
+            const int img_index, Color avg_background_color, int rbg_value);
 
     /**
      * 

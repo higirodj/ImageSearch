@@ -5,7 +5,6 @@
  * Created on January 9, 2018, 2:06 PM
  */
 
-#include <cstdlib>
 #include "ImageSearchAlgorithm.h"
 
 using namespace std;

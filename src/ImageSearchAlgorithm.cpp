@@ -21,7 +21,7 @@ Color
 ImageSearchAlgorithm::average_background_color(const int img_row,
         const int img_col) {
     Color color_value = {0, 0, 0};
-    int red = 0, blue = 0, green = 0, pixel_counter = 0;
+    int pixel_counter = 0;
     const std::vector<unsigned char>& buffer_mask = mask.getBuffer();
     const std::vector<unsigned char>& buffer_image = image.getBuffer();
     const int mask_width = mask.getWidth();
@@ -32,9 +32,9 @@ ImageSearchAlgorithm::average_background_color(const int img_row,
             int mask_index = getPixelIndex(row, col, mask_width);
             int img_index = getPixelIndex(row + img_row, col +
             img_col, img_width);
-            red = static_cast<int> (buffer_mask[mask_index]);
-            blue = static_cast<int> (buffer_mask[mask_index + 1]);
-            green = static_cast<int> (buffer_mask[mask_index + 2]);
+            int red = static_cast<int> (buffer_mask[mask_index]);
+            int blue = static_cast<int> (buffer_mask[mask_index + 1]);
+            int green = static_cast<int> (buffer_mask[mask_index + 2]);
             int rbg_value = (red + blue + green);
             if (rbg_value == 0) {
                 color_value.red += static_cast<int> (buffer_image[img_index]);
@@ -87,13 +87,18 @@ ImageSearchAlgorithm::check_match_helper(const std::vector<unsigned char>& buffe
     int red = static_cast<int>(buffer_image[img_index]);
     int blue = static_cast<int>(buffer_image[img_index + 1]);;
     int green = static_cast<int>(buffer_image[img_index + 2]);;
-    if ( ((red_avg - tolerance) <= red &&
-            red <= (red_avg + tolerance)) &&
-        ((blue_avg - tolerance) <= blue &&
-            blue <= (blue_avg + tolerance)) &&
-        ((green_avg - tolerance) <= green &&
-            green <= (green_avg + tolerance)) ) {
-        return true;
+    if (rbg_value == 0) {
+        if ((std::abs(red - red_avg) <= tolerance) &&
+            (std::abs(blue - blue_avg) <= tolerance) &&
+            (std::abs(green - green_avg) <= tolerance)) {
+            return true;
+        }
+    } else {
+        if ((std::abs(red - red_avg) > tolerance) &&
+            (std::abs(blue - blue_avg) > tolerance) &&
+            (std::abs(green - green_avg) > tolerance)) {
+            return true;
+        }
     }
     return false;
 }
@@ -101,17 +106,23 @@ ImageSearchAlgorithm::check_match_helper(const std::vector<unsigned char>& buffe
 void
 ImageSearchAlgorithm::check_match(const int img_row, const int img_col) {
     int net_match = 0, match_pix_count = 0, mis_match_pix_count = 0,
-            img_index = 0;
+            img_index = 0, mask_index = 0;
     const std::vector<unsigned char>& buffer_image = image.getBuffer();
+    const std::vector<unsigned char>& buffer_mask = mask.getBuffer();
     const int mask_height = mask.getHeight();
     const int mask_width = mask.getWidth();
     const int img_width = image.getWidth();
     Color avg_back_ground_color = average_background_color(img_row, img_col);
     for (int row = 0; (row < mask_height); row++) {
         for (int col = 0; (col < mask_width); col++) {
+            mask_index = getPixelIndex(row, col, mask_width);
             img_index = getPixelIndex(row + img_row, col + img_col, img_width);
+            int red = static_cast<int> (buffer_mask[mask_index]);
+            int blue = static_cast<int> (buffer_mask[mask_index + 1]);
+            int green = static_cast<int> (buffer_mask[mask_index + 2]);
+            int rbg_value = red + blue + green;
             if (check_match_helper(buffer_image, img_index,
-                    avg_back_ground_color)) {
+                    avg_back_ground_color, rbg_value)) {
                 match_pix_count++;
             } else {
                 mis_match_pix_count++;
