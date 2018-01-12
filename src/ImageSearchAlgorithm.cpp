@@ -7,7 +7,8 @@ ImageSearchAlgorithm::ImageSearchAlgorithm(const std::string& search_mask,
         percentage(match_percentage),
         tolerance(color_tolerance) {
     mask.load(search_mask);
-    image.load(search_image);     
+    image.load(search_image);
+    output = image;     
 }
 
 int
@@ -158,10 +159,10 @@ ImageSearchAlgorithm::print() {
     for (unsigned int k = 1; k < matched_regions.size(); k++) {
         int row = std::get<0>(matched_regions[k]);
         int col = std::get<1>(matched_regions[k]);
-        output = image;
         drawBox(output, row, col, mask.getWidth(), mask.getHeight());
         std::printf("sub-image matched at: %d %d %d %d\n" , row, col,
                 row + mask.getHeight(), col + mask.getWidth());
     }
     output.write(output_img);
+    std::cout << "Number of matches: " << (matched_regions.size() - 1) << std::endl;
 }
