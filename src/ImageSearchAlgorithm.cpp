@@ -94,8 +94,8 @@ ImageSearchAlgorithm::check_match_helper(const std::vector<unsigned char>& buffe
             return true;
         }
     } else {
-        if ((std::abs(red - red_avg) > tolerance) &&
-            (std::abs(blue - blue_avg) > tolerance) &&
+        if ((std::abs(red - red_avg) > tolerance) ||
+            (std::abs(blue - blue_avg) > tolerance) ||
             (std::abs(green - green_avg) > tolerance)) {
             return true;
         }
