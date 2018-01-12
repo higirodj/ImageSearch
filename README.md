@@ -1,5 +1,5 @@
 # ImageSearch
-I. An image search algorithm in c++ that searches for the occurrence of a sub-image in a larger image. 
+I. An image search algorithm in that searches for the occurrence of a sub-image in a larger image. 
 
 II. File list: ImageSearchAlgorithm.cpp
 
