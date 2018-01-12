@@ -7,7 +7,7 @@ III. Command line arguments in order to run the program:
 
 g++ -g –Wall –std=c++11 –O3 ImageSearchAlgorithm.cpp PNG.cpp main.cpp –o search -lpng
 
-./search &lt;mask&lt; &lt;image&lt; &lt;output&lt; &lt;percentage&gt; &lt;tolerance&gt;
+./search &lt;mask&gt; &lt;image&gt; &lt;output&gt; &lt;percentage&gt; &lt;tolerance&gt;
 
 IV. Textual output verification:
 
